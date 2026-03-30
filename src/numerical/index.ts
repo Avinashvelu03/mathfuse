@@ -2,11 +2,9 @@
  * @module numerical
  * Root finding, numerical integration, differentiation, and interpolation.
  */
-
 export type Fn = (x: number) => number;
 
 // ─── Root Finding ─────────────────────────────────────────────────────────────
-
 export interface RootResult {
   root: number;
   iterations: number;
@@ -57,7 +55,7 @@ export function newtonRaphson(
   maxIter = 100
 ): RootResult {
   const h = 1e-7;
-  const deriv = df ?? ((x: number) => (f(x + h) - f(x - h)) / (2 * h));
+  const deriv = df ?? ((x: number): number => (f(x + h) - f(x - h)) / (2 * h));
   let x = x0;
   for (let iter = 0; iter < maxIter; iter++) {
     const fx = f(x);
@@ -90,15 +88,14 @@ export function brent(
   if (Math.abs(fa) < Math.abs(fb)) { [a, b] = [b, a]; [fa, fb] = [fb, fa]; }
   let c = a, fc = fa, s = 0;
   let mflag = true, d = 0;
-
   for (let iter = 0; iter < maxIter; iter++) {
     if (Math.abs(b - a) < tol) {
       return { root: b, iterations: iter + 1, converged: true, error: Math.abs(b - a) };
     }
     if (fa !== fc && fb !== fc) {
       s = (a * fb * fc) / ((fa - fb) * (fa - fc)) +
-          (b * fa * fc) / ((fb - fa) * (fb - fc)) +
-          (c * fa * fb) / ((fc - fa) * (fc - fb));
+        (b * fa * fc) / ((fb - fa) * (fb - fc)) +
+        (c * fa * fb) / ((fc - fa) * (fc - fb));
     } else {
       s = b - fb * (b - a) / (fb - fa);
     }
@@ -120,7 +117,6 @@ export function brent(
 }
 
 // ─── Numerical Differentiation ────────────────────────────────────────────────
-
 /**
  * First derivative using central differences (O(h²) accuracy).
  */
@@ -153,7 +149,6 @@ export function gradient(
 }
 
 // ─── Numerical Integration ────────────────────────────────────────────────────
-
 /**
  * Adaptive Simpson's rule — highly accurate for smooth functions.
  */
@@ -220,7 +215,6 @@ export function gaussLegendre(f: Fn, a: number, b: number): number {
 }
 
 // ─── Interpolation ────────────────────────────────────────────────────────────
-
 /**
  * Linear interpolation between two points.
  */
@@ -240,7 +234,7 @@ export function inverseLerp(a: number, b: number, value: number): number {
  * Linear interpolation from a data table (sorted x values required).
  * @param xs - sorted x values
  * @param ys - corresponding y values
- * @param x  - query x value
+ * @param x - query x value
  */
 export function tableInterpolate(xs: number[], ys: number[], x: number): number {
   if (xs.length !== ys.length || xs.length < 2) {
@@ -277,7 +271,6 @@ export function lagrange(xs: number[], ys: number[], x: number): number {
 }
 
 // ─── Misc Numerical Utilities ─────────────────────────────────────────────────
-
 /**
  * Clamp a value to [min, max].
  */
