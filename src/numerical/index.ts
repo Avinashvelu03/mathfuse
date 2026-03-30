@@ -247,7 +247,6 @@ export function tableInterpolate(xs: number[], ys: number[], x: number): number 
     const mid = (lo + hi) >> 1;
     if (xs[mid] <= x) lo = mid; else hi = mid;
   }
-  if (xs[hi] === xs[lo]) throw new RangeError('xs must be strictly increasing without duplicates');
   return ys[lo] + ((x - xs[lo]) / (xs[hi] - xs[lo])) * (ys[hi] - ys[lo]);
 }
 

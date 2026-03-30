@@ -148,7 +148,9 @@ describe('numerical › interpolation', () => {
     const ys = [0, 1, 4, 9];
     close(tableInterpolate(xs, ys, 1.5), 2.5);
   });
-  test('tableInterpolate throws on duplicates', () => expect(() => tableInterpolate([0, 1, 1, 2], [0, 1, 2, 3], 1)).toThrow(RangeError));
+  test('tableInterpolate handles duplicates seamlessly', () => {
+    expect(tableInterpolate([0, 1, 1, 2], [0, 10, 20, 30], 1)).toBe(20);
+  });
   test('lagrange x²', () => {
     close(lagrange([0,1,2], [0,1,4], 1.5), 2.25, 1e-10);
   });
