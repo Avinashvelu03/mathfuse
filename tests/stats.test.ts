@@ -20,8 +20,15 @@ describe('stats › central tendency', () => {
     close(geometricMean([1, 2, 4, 8]), Math.pow(64, 0.25), 1e-10);
     close(geometricMean([4, 1]), 2, 1e-10);
   });
+  test('geometricMean throws on non-positive', () => {
+    expect(() => geometricMean([1, 0, 3])).toThrow(RangeError);
+    expect(() => geometricMean([-1, 2, 3])).toThrow(RangeError);
+  });
   test('harmonicMean', () => {
     close(harmonicMean([1, 2, 4]), 12 / 7, 1e-10);
+  });
+  test('harmonicMean throws on zero', () => {
+    expect(() => harmonicMean([1, 0, 3])).toThrow(RangeError);
   });
   test('median odd length', () => expect(median([3, 1, 4, 1, 5])).toBe(3));
   test('median even length', () => expect(median([1, 2, 3, 4])).toBe(2.5));
@@ -29,6 +36,9 @@ describe('stats › central tendency', () => {
   test('mode multiple', () => expect(mode([1, 2, 2, 3, 3])).toEqual([2, 3]));
   test('weightedMean', () => {
     close(weightedMean([1, 2, 3], [1, 2, 3]), 14 / 6, 1e-10);
+  });
+  test('weightedMean throws on mismatched lengths', () => {
+    expect(() => weightedMean([1, 2, 3], [1, 2])).toThrow(RangeError);
   });
 });
 
@@ -65,9 +75,16 @@ describe('stats › percentile', () => {
 describe('stats › shape', () => {
   const normal = [2, 4, 4, 4, 5, 5, 7, 9];
   test('skewness is a number', () => expect(typeof skewness(normal)).toBe('number'));
+  test('skewness throws on < 3 data points', () => {
+    expect(() => skewness([1])).toThrow(RangeError);
+    expect(() => skewness([1, 2])).toThrow(RangeError);
+  });
   test('kurtosis is a number', () => {
     const data = [1, 2, 3, 4, 5, 6, 7, 8];
     expect(typeof kurtosis(data)).toBe('number');
+  });
+  test('kurtosis throws on < 4 data points', () => {
+    expect(() => kurtosis([1, 2, 3])).toThrow(RangeError);
   });
 });
 
@@ -77,6 +94,14 @@ describe('stats › correlation', () => {
   test('pearson perfect positive', () => close(pearsonCorrelation(x, y), 1));
   test('pearson perfect negative', () => close(pearsonCorrelation(x, y.map(v => -v)), -1));
   test('spearman', () => close(spearmanCorrelation(x, y), 1));
+  test('spearman with ties', () => {
+    // tied values should use average ranks
+    const xt = [1, 2, 2, 3];
+    const yt = [1, 2, 3, 4];
+    const r = spearmanCorrelation(xt, yt);
+    expect(typeof r).toBe('number');
+    expect(r).toBeGreaterThan(0.9);
+  });
   test('covariance', () => close(covariance(x, y), 5.0));
 });
 

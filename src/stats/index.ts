@@ -18,12 +18,18 @@ export function mean(data: number[]): number {
 
 export function geometricMean(data: number[]): number {
   assertNonEmpty(data);
+  if (data.some((v) => v <= 0)) {
+    throw new RangeError('geometricMean requires all values to be positive');
+  }
   const logSum = data.reduce((s, v) => s + Math.log(v), 0);
   return Math.exp(logSum / data.length);
 }
 
 export function harmonicMean(data: number[]): number {
   assertNonEmpty(data);
+  if (data.some((v) => v === 0)) {
+    throw new RangeError('harmonicMean requires all values to be non-zero');
+  }
   const recipSum = data.reduce((s, v) => s + 1 / v, 0);
   return data.length / recipSum;
 }
@@ -50,6 +56,9 @@ export function mode(data: number[]): number[] {
 
 export function weightedMean(data: number[], weights: number[]): number {
   assertNonEmpty(data);
+  if (data.length !== weights.length) {
+    throw new RangeError('data and weights must have equal length');
+  }
   const wSum = weights.reduce((s, w) => s + w, 0);
   return data.reduce((s, v, i) => s + v * weights[i], 0) / wSum;
 }
@@ -110,6 +119,9 @@ export function fiveNumberSummary(data: number[]): [number, number, number, numb
 
 export function skewness(data: number[]): number {
   assertNonEmpty(data);
+  if (data.length < 3) {
+    throw new RangeError('skewness requires at least 3 data points');
+  }
   const m = mean(data);
   const s = stdDev(data);
   if (s === 0) return 0;
@@ -122,8 +134,11 @@ export function skewness(data: number[]): number {
 
 export function kurtosis(data: number[]): number {
   assertNonEmpty(data);
+  if (data.length < 4) {
+    throw new RangeError('kurtosis requires at least 4 data points');
+  }
   const m = mean(data);
-  const s = stdDev(data);
+  const s = stdDev(data, true);
   if (s === 0) return 0;
   const n = data.length;
   const k4 = data.reduce((sum, v) => sum + ((v - m) / s) ** 4, 0);
@@ -147,7 +162,21 @@ export function spearmanCorrelation(x: number[], y: number[]): number {
   if (x.length !== y.length) throw new RangeError('x and y must have equal length');
   const rankArr = (arr: number[]): number[] => {
     const sorted = [...arr].sort((a, b) => a - b);
-    return arr.map((v) => sorted.indexOf(v) + 1);
+    const ranks = new Array<number>(arr.length);
+    // Build rank map with average ranks for ties
+    const rankMap = new Map<number, number>();
+    let i = 0;
+    while (i < sorted.length) {
+      let j = i;
+      while (j < sorted.length && sorted[j] === sorted[i]) j++;
+      const avgRank = (i + 1 + j) / 2; // average of 1-indexed positions
+      rankMap.set(sorted[i], avgRank);
+      i = j;
+    }
+    for (let k = 0; k < arr.length; k++) {
+      ranks[k] = rankMap.get(arr[k])!;
+    }
+    return ranks;
   };
   return pearsonCorrelation(rankArr(x), rankArr(y));
 }

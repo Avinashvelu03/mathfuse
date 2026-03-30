@@ -15,6 +15,20 @@ function assertPosInt(n: number, label = 'n'): void {
   }
 }
 
+/**
+ * Modular multiplication using Russian peasant algorithm to avoid overflow.
+ * Computes (a * b) % m safely for large numbers.
+ */
+function mulmod(a: number, b: number, m: number): number {
+  let result = 0;
+  a %= m;
+  while (b > 0) {
+    if (b & 1) result = (result + a) % m;
+    a = (a * 2) % m;
+    b >>= 1;
+  }
+  return result;
+}
 // ─── Primes ───────────────────────────────────────────────────────────────────
 
 /**
@@ -31,16 +45,6 @@ export function isPrime(n: number): boolean {
   let r = 0;
   while (d % 2 === 0) { d >>= 1; r++; }
 
-  const mulmod = (a: number, b: number, m: number): number => {
-    let result = 0;
-    a %= m;
-    while (b > 0) {
-      if (b & 1) result = (result + a) % m;
-      a = (a * 2) % m;
-      b >>= 1;
-    }
-    return result;
-  };
 
   const powmod = (base: number, exp: number, mod: number): number => {
     let result = 1;
@@ -216,8 +220,8 @@ export function modPow(base: number, exp: number, m: number): number {
   let result = 1;
   base %= m;
   while (exp > 0) {
-    if (exp & 1) result = (result * base) % m;
-    base = (base * base) % m;
+    if (exp & 1) result = mulmod(result, base, m);
+    base = mulmod(base, base, m);
     exp >>= 1;
   }
   return result;
