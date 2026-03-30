@@ -1,9 +1,9 @@
 # mathfuse
 
-[![CI](https://github.com/Avinashvelu03/mathfuse/actions/workflows/ci.yml/badge.svg)](https://github.com/scientistmaths/mathfuse/actions)
+[![CI](https://github.com/Avinashvelu03/mathfuse/actions/workflows/ci.yml/badge.svg)](https://github.com/Avinashvelu03/mathfuse/actions)
 [![npm version](https://img.shields.io/npm/v/mathfuse.svg)](https://www.npmjs.com/package/mathfuse)
 [![npm downloads](https://img.shields.io/npm/dm/mathfuse.svg)](https://www.npmjs.com/package/mathfuse)
-[![Coverage](https://codecov.io/gh/scientistmaths/mathfuse/branch/main/graph/badge.svg)](https://codecov.io/gh/scientistmaths/mathfuse)
+[![Coverage](https://codecov.io/gh/Avinashvelu03/mathfuse/branch/main/graph/badge.svg)](https://codecov.io/gh/Avinashvelu03/mathfuse)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/mathfuse)](https://bundlephobia.com/package/mathfuse)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
@@ -226,7 +226,7 @@ mathfuse targets ES2020 and works in all modern browsers and Node.js ≥ 16.
 Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) and open an issue before submitting a PR for large changes.
 
 ```bash
-git clone https://github.com/scientistmaths/mathfuse.git
+git clone https://github.com/Avinashvelu03/mathfuse.git
 cd mathfuse
 npm install
 npm test

@@ -6,15 +6,15 @@
     "math", "mathematics", "statistics", "linear-algebra", "matrix",
     "number-theory", "numerical", "utility", "typescript", "zero-dependency"
   ],
-  "author": "Scientist Maths",
+  "author": "Avinashvelu03",
   "license": "MIT",
-  "homepage": "https://github.com/scientistmaths/mathfuse#readme",
+  "homepage": "https://github.com/Avinashvelu03/mathfuse#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/scientistmaths/mathfuse.git"
+    "url": "https://github.com/Avinashvelu03/mathfuse.git"
   },
   "bugs": {
-    "url": "https://github.com/scientistmaths/mathfuse/issues"
+    "url": "https://github.com/Avinashvelu03/mathfuse/issues"
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
