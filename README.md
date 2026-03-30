@@ -1,6 +1,6 @@
 # mathfuse
 
-[![CI](https://github.com/scientistmaths/mathfuse/actions/workflows/ci.yml/badge.svg)](https://github.com/scientistmaths/mathfuse/actions)
+[![CI](https://github.com/Avinashvelu03/mathfuse/actions/workflows/ci.yml/badge.svg)](https://github.com/scientistmaths/mathfuse/actions)
 [![npm version](https://img.shields.io/npm/v/mathfuse.svg)](https://www.npmjs.com/package/mathfuse)
 [![npm downloads](https://img.shields.io/npm/dm/mathfuse.svg)](https://www.npmjs.com/package/mathfuse)
 [![Coverage](https://codecov.io/gh/scientistmaths/mathfuse/branch/main/graph/badge.svg)](https://codecov.io/gh/scientistmaths/mathfuse)
