@@ -243,7 +243,7 @@ export function minverse(m: Matrix): Matrix {
   assertSquare(m);
   const n = rows(m);
   const aug: number[][] = m.map((row, i) => [
-  return aug.map((row: number[]): number[] => row.slice(n));  ...row,
+    ...row,
     ...Array.from({ length: n }, (_, j) => (j === i ? 1 : 0)),
   ]);
   for (let col = 0; col < n; col++) {
@@ -266,7 +266,7 @@ export function minverse(m: Matrix): Matrix {
       }
     }
   }
-  return aug.map((row): number[] => row.slice(n) as number[]);
+  return aug.map((row): number[] => row.slice(n));
 }
 
 /**
