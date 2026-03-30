@@ -1,0 +1,84 @@
+{
+  "name": "mathfuse",
+  "version": "1.0.0",
+  "description": "A modern, zero-dependency TypeScript math utility library — statistics, linear algebra, number theory & numerical methods.",
+  "keywords": [
+    "math", "mathematics", "statistics", "linear-algebra", "matrix",
+    "number-theory", "numerical", "utility", "typescript", "zero-dependency"
+  ],
+  "author": "Scientist Maths",
+  "license": "MIT",
+  "homepage": "https://github.com/scientistmaths/mathfuse#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scientistmaths/mathfuse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/scientistmaths/mathfuse/issues"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./stats": {
+      "import": "./dist/esm/stats/index.js",
+      "require": "./dist/cjs/stats/index.js",
+      "types": "./dist/types/stats/index.d.ts"
+    },
+    "./algebra": {
+      "import": "./dist/esm/algebra/index.js",
+      "require": "./dist/cjs/algebra/index.js",
+      "types": "./dist/types/algebra/index.d.ts"
+    },
+    "./number-theory": {
+      "import": "./dist/esm/number-theory/index.js",
+      "require": "./dist/cjs/number-theory/index.js",
+      "types": "./dist/types/number-theory/index.d.ts"
+    },
+    "./numerical": {
+      "import": "./dist/esm/numerical/index.js",
+      "require": "./dist/cjs/numerical/index.js",
+      "types": "./dist/types/numerical/index.d.ts"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs && npm run build:types",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
+    "prepublishOnly": "npm run test && npm run build",
+    "size": "bundlephobia mathfuse",
+    "docs": "typedoc --out docs src/index.ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5",
+    "ts-jest": "^29.1.2",
+    "typedoc": "^0.25.12",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
