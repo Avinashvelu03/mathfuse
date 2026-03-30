@@ -128,7 +128,7 @@ function assertSquare(m: Matrix, label = 'matrix'): void {
  * Create an n×m matrix filled with a value (default 0).
  */
 export function mzeros(n: number, m: number): Matrix {
-  return Array.from({ length: n }, () => new Array(m).fill(0));
+  return Array.from({ length: n }, (): number[] => new Array(m).fill(0));
 }
 
 /**
@@ -145,7 +145,7 @@ export function midentity(n: number): Matrix {
  */
 export function mtranspose(m: Matrix): Matrix {
   assertMatrix(m);
-  return Array.from({ length: cols(m) }, (_, c) =>
+  return Array.from({ length: cols(m) }, (_, c): number[] =>
     Array.from({ length: rows(m) }, (__, r) => m[r][c])
   );
 }
@@ -209,11 +209,9 @@ export function mdet(m: Matrix): number {
   const n = rows(m);
   if (n === 1) return m[0][0];
   if (n === 2) return m[0][0] * m[1][1] - m[0][1] * m[1][0];
-
   // Copy
   const a: number[][] = m.map((row) => [...row]);
   let sign = 1;
-
   for (let col = 0; col < n; col++) {
     // Find pivot
     let maxRow = col;
@@ -248,7 +246,6 @@ export function minverse(m: Matrix): Matrix {
     ...row,
     ...Array.from({ length: n }, (_, j) => (j === i ? 1 : 0)),
   ]);
-
   for (let col = 0; col < n; col++) {
     // Find pivot
     let maxRow = col;
@@ -269,7 +266,7 @@ export function minverse(m: Matrix): Matrix {
       }
     }
   }
-  return aug.map((row) => row.slice(n));
+  return aug.map((row): number[] => row.slice(n) as number[]);
 }
 
 /**
@@ -320,7 +317,6 @@ export function msolve(A: Matrix, b: Vector): Vector {
   }
   const n = rows(A);
   const aug: number[][] = A.map((row, i) => [...row, b[i]]);
-
   for (let col = 0; col < n; col++) {
     let maxRow = col;
     for (let row = col + 1; row < n; row++) {
