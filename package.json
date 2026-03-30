@@ -4,7 +4,8 @@
   "description": "A modern, zero-dependency TypeScript math utility library — statistics, linear algebra, number theory & numerical methods.",
   "keywords": [
     "math", "mathematics", "statistics", "linear-algebra", "matrix",
-    "number-theory", "numerical", "utility", "typescript", "zero-dependency"
+    "number-theory", "numerical", "numerical-analysis", "calculus", 
+    "utility", "typescript", "zero-dependency"
   ],
   "author": "Avinashvelu03",
   "license": "MIT",
