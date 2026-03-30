@@ -67,6 +67,9 @@ export function weightedMean(data: number[], weights: number[]): number {
 
 export function variance(data: number[], population = false): number {
   assertNonEmpty(data);
+  if (!population && data.length < 2) {
+    throw new RangeError('sample variance requires at least 2 data points');
+  }
   const m = mean(data);
   const sum = data.reduce((s, v) => s + (v - m) ** 2, 0);
   return sum / (population ? data.length : data.length - 1);
@@ -150,12 +153,15 @@ export function kurtosis(data: number[]): number {
 export function covariance(x: number[], y: number[]): number {
   if (x.length !== y.length) throw new RangeError('x and y must have equal length');
   assertNonEmpty(x);
+  if (x.length < 2) throw new RangeError('covariance requires at least 2 data points');
   const mx = mean(x), my = mean(y);
   return x.reduce((s, v, i) => s + (v - mx) * (y[i] - my), 0) / (x.length - 1);
 }
 
 export function pearsonCorrelation(x: number[], y: number[]): number {
-  return covariance(x, y) / (stdDev(x) * stdDev(y));
+  const sx = stdDev(x), sy = stdDev(y);
+  if (sx === 0 || sy === 0) return 0;
+  return covariance(x, y) / (sx * sy);
 }
 
 export function spearmanCorrelation(x: number[], y: number[]): number {
@@ -210,12 +216,15 @@ export interface RegressionResult {
 export function linearRegression(x: number[], y: number[]): RegressionResult {
   if (x.length !== y.length) throw new RangeError('x and y must have equal length');
   assertNonEmpty(x);
+  if (x.length < 2) throw new RangeError('linearRegression requires at least 2 data points');
   const n = x.length;
   const sx = x.reduce((s, v) => s + v, 0);
   const sy = y.reduce((s, v) => s + v, 0);
   const sxy = x.reduce((s, v, i) => s + v * y[i], 0);
   const sxx = x.reduce((s, v) => s + v * v, 0);
-  const slope = (n * sxy - sx * sy) / (n * sxx - sx * sx);
+  const denom = n * sxx - sx * sx;
+  if (denom === 0) throw new RangeError('linearRegression requires at least 2 distinct x values');
+  const slope = (n * sxy - sx * sy) / denom;
   const intercept = (sy - slope * sx) / n;
   const yMean = sy / n;
   const ssTot = y.reduce((s, v) => s + (v - yMean) ** 2, 0);

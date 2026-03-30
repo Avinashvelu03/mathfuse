@@ -50,6 +50,7 @@ export function vdot(a: Vector, b: Vector): number {
  * L2 (Euclidean) norm of a vector.
  */
 export function vnorm(v: Vector, p = 2): number {
+  if (v.length === 0) return 0;
   if (p === Infinity) return Math.max(...v.map(Math.abs));
   if (p <= 0) throw new RangeError('p-norm requires p > 0');
   return v.reduce((s, x) => s + Math.abs(x) ** p, 0) ** (1 / p);

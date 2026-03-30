@@ -46,6 +46,7 @@ describe('stats › spread', () => {
   const data = [2, 4, 4, 4, 5, 5, 7, 9];
   test('variance population', () => close(variance(data, true), 4, 1e-10));
   test('variance sample', () => close(variance(data), 4.571428571, 1e-7));
+  test('variance sample throws on n=1', () => expect(() => variance([1])).toThrow(RangeError));
   test('stdDev', () => close(stdDev([2, 4, 4, 4, 5, 5, 7, 9], true), 2, 1e-10));
   test('range', () => expect(range([1, 3, 7, 2])).toBe(6));
   test('iqr', () => {
@@ -103,6 +104,8 @@ describe('stats › correlation', () => {
     expect(r).toBeGreaterThan(0.9);
   });
   test('covariance', () => close(covariance(x, y), 5.0));
+  test('covariance throws on n=1', () => expect(() => covariance([1], [2])).toThrow(RangeError));
+  test('pearson flat / zero variance', () => expect(pearsonCorrelation([1, 1, 1], [1, 2, 3])).toBe(0));
 });
 
 describe('stats › normalization', () => {
@@ -120,4 +123,6 @@ describe('stats › linear regression', () => {
   test('intercept = 0', () => close(reg.intercept, 0));
   test('r² = 1', () => close(reg.r2, 1));
   test('predict', () => close(reg.predict(6), 12));
+  test('linearRegression throws on n=1', () => expect(() => linearRegression([1], [1])).toThrow(RangeError));
+  test('linearRegression throws on collinear x', () => expect(() => linearRegression([2,2,2], [1,2,3])).toThrow(RangeError));
 });

@@ -25,6 +25,7 @@ describe('algebra › vectors', () => {
   test('vnorm L2', () => close(vnorm([3,4]), 5));
   test('vnorm L1', () => close(vnorm([3,4], 1), 7));
   test('vnorm Linf', () => close(vnorm([3,4], Infinity), 4));
+  test('vnorm max limit of empty vector', () => expect(vnorm([], Infinity)).toBe(0));
   test('vnormalize', () => close(vnorm(vnormalize([3,4])), 1));
   test('vdistance', () => close(vdistance([0,0],[3,4]), 5));
   test('cosineSimilarity parallel', () => close(cosineSimilarity([1,0],[1,0]), 1));
@@ -147,6 +148,7 @@ describe('numerical › interpolation', () => {
     const ys = [0, 1, 4, 9];
     close(tableInterpolate(xs, ys, 1.5), 2.5);
   });
+  test('tableInterpolate throws on duplicates', () => expect(() => tableInterpolate([0, 1, 1, 2], [0, 1, 2, 3], 1)).toThrow(RangeError));
   test('lagrange x²', () => {
     close(lagrange([0,1,2], [0,1,4], 1.5), 2.25, 1e-10);
   });
