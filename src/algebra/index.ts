@@ -128,7 +128,7 @@ function assertSquare(m: Matrix, label = 'matrix'): void {
  * Create an n×m matrix filled with a value (default 0).
  */
 export function mzeros(n: number, m: number): Matrix {
-  return Array.from({ length: n }, (): number[] => new Array(m).fill(0));
+  return Array.from({ length: n }, (): number[] => new Array<number>(m).fill(0));
 }
 
 /**
