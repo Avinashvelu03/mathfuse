@@ -237,3 +237,31 @@ npm test
 ## License
 
 [MIT](LICENSE) © Scientist Maths
+
+---
+
+## ➕ Back MathFuse
+
+MathFuse is a one-person project — no VC funding, no corporate backing. Just clean math primitives built for TypeScript developers.
+
+If it's saved you from writing `sum` or `mean` for the hundredth time, or handled edge cases you never thought of:
+
+<div align="center">
+
+```
+┌─────────────────────────────────────────────────────┐
+│   Open source math deserves open source support.    │
+│                                                     │
+│   ☕  Ko-fi · GitHub Sponsors                       │
+└─────────────────────────────────────────────────────┘
+```
+
+[![Ko-fi](https://img.shields.io/badge/☕%20Ko--fi-Donate-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/avinashvelu)
+[![GitHub Sponsors](https://img.shields.io/badge/💜%20Sponsor%20on%20GitHub-EA4AAA?style=for-the-badge&logo=github)](https://github.com/sponsors/Avinashvelu03)
+
+</div>
+
+**Zero cost, high impact:**
+- ⭐ [Drop a star](https://github.com/Avinashvelu03/mathfuse) — it's free and it helps more than you think
+- 📣 Mention MathFuse in your next tech post or talk
+- 🛠️ [Open an issue](https://github.com/Avinashvelu03/mathfuse/issues) with missing math functions you need
