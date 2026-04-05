@@ -108,7 +108,7 @@ export function vhadamard(a: Vector, b: Vector): Vector {
 // ─── Matrix Helpers ──────────────────────────────────────────────────────────
 
 function rows(m: Matrix): number { return m.length; }
-function cols(m: Matrix): number { return m.length > 0 ? m[0].length : 0; }
+function cols(m: Matrix): number { return m[0].length; }
 
 function assertMatrix(m: Matrix, label = 'matrix'): void {
   if (!m || m.length === 0) throw new RangeError(`${label} must be non-empty`);
