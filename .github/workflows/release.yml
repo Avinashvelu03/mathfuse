@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Use Node.js 22
+        uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'npm'
@@ -26,11 +27,17 @@ jobs:
       - name: Run linter
         run: npm run lint
 
+      - name: Type check
+        run: npx tsc -p tsconfig.esm.json --noEmit
+
       - name: Run tests with coverage
-        run: npx jest --coverage
+        run: npm test -- --forceExit --passWithNoTests
 
       - name: Build
         run: npm run build
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=moderate
 
       - name: Publish to npm
         run: npm publish --access public
