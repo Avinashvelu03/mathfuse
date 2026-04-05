@@ -126,3 +126,29 @@ describe('stats › linear regression', () => {
   test('linearRegression throws on n=1', () => expect(() => linearRegression([1], [1])).toThrow(RangeError));
   test('linearRegression throws on collinear x', () => expect(() => linearRegression([2,2,2], [1,2,3])).toThrow(RangeError));
 });
+
+// ─── Stats zero-variance edge cases ───────────────────────────────────────────────
+describe('stats › zero-variance edge cases', () => {
+  test('skewness constant data returns 0', () =>
+    expect(skewness([5, 5, 5, 5])).toBe(0));
+  test('kurtosis constant data returns 0', () =>
+    expect(kurtosis([5, 5, 5, 5, 5])).toBe(0));
+  test('minMaxNormalize constant array returns zeros', () =>
+    minMaxNormalize([4, 4, 4]).forEach(v => expect(v).toBe(0)));
+  test('pearsonCorrelation sy===0 returns 0', () =>
+    expect(pearsonCorrelation([1, 2, 3], [5, 5, 5])).toBe(0));
+  test('spearmanCorrelation all-ties returns 0', () =>
+    expect(spearmanCorrelation([1, 1, 1], [2, 2, 2])).toBe(0));
+  test('linearRegression ssTot=0 returns r2=1', () => {
+    const reg = linearRegression([1, 2, 3], [5, 5, 5]);
+    expect(reg.r2).toBe(1);
+  });
+  test('spearmanCorrelation length mismatch throws', () =>
+    expect(() => spearmanCorrelation([1, 2], [1, 2, 3])).toThrow(RangeError));
+  test('covariance length mismatch throws', () =>
+    expect(() => covariance([1, 2], [1])).toThrow(RangeError));
+  test('zScore constant data returns NaN (s=0 division)', () => {
+    const z = zScore([3, 3, 3]);
+    z.forEach(v => expect(isNaN(v)).toBe(true));
+  });
+});
