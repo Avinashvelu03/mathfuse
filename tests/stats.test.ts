@@ -152,3 +152,9 @@ describe('stats › zero-variance edge cases', () => {
     z.forEach(v => expect(isNaN(v)).toBe(true));
   });
 });
+
+// ─── Stats coverage completions ────────────────────────────────────────────────
+describe('stats › coverage completions', () => {
+  test('linearRegression length mismatch throws', () =>
+    expect(() => linearRegression([1, 2, 3], [1, 2])).toThrow(RangeError));
+});
