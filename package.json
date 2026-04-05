@@ -1,6 +1,6 @@
 {
   "name": "mathfuse",
-      "version": "1.0.2",
+      "version": "1.0.3",
   "description": "A modern, zero-dependency TypeScript math utility library — statistics, linear algebra, number theory & numerical methods.",
   "keywords": [
     "math", "mathematics", "statistics", "linear-algebra", "matrix",
