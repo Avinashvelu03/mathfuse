@@ -70,3 +70,69 @@ describe('number-theory › sequences', () => {
   test('digitalRoot(9875)', () => expect(digitalRoot(9875)).toBe(2));
   test('digitalRoot(9)', () => expect(digitalRoot(9)).toBe(9));
 });
+
+// ─── Number-theory error branches ──────────────────────────────────────────────
+describe('number-theory › error branches', () => {
+  // assertNonNegInt throws on float
+  test('isPrime float throws', () =>
+    expect(() => isPrime(1.5)).toThrow(TypeError));
+  test('primesUpTo float throws', () =>
+    expect(() => primesUpTo(1.5)).toThrow(TypeError));
+  test('nextPrime float throws', () =>
+    expect(() => nextPrime(1.5)).toThrow(TypeError));
+  // assertPosInt throws on 0 or float
+  test('primeFactors(0) throws', () =>
+    expect(() => primeFactors(0)).toThrow(TypeError));
+  test('primeFactors float throws', () =>
+    expect(() => primeFactors(1.5)).toThrow(TypeError));
+  test('eulerTotient(0) throws', () =>
+    expect(() => eulerTotient(0)).toThrow(TypeError));
+  test('collatz(0) throws', () =>
+    expect(() => collatz(0)).toThrow(TypeError));
+  test('collatz float throws', () =>
+    expect(() => collatz(1.5)).toThrow(TypeError));
+  test('digitalRoot(0) throws', () =>
+    expect(() => digitalRoot(0)).toThrow(TypeError));
+  test('digitalRoot float throws', () =>
+    expect(() => digitalRoot(1.5)).toThrow(TypeError));
+  test('factorial float throws', () =>
+    expect(() => factorial(1.5)).toThrow(TypeError));
+  test('factorial negative throws', () =>
+    expect(() => factorial(-1)).toThrow(TypeError));
+  test('binomial float n throws', () =>
+    expect(() => binomial(1.5, 1)).toThrow(TypeError));
+  test('binomial float k throws', () =>
+    expect(() => binomial(3, 1.5)).toThrow(TypeError));
+  test('permutations float n throws', () =>
+    expect(() => permutations(1.5, 1)).toThrow(TypeError));
+  test('permutations float r throws', () =>
+    expect(() => permutations(3, 1.5)).toThrow(TypeError));
+  test('modPow float base throws', () =>
+    expect(() => modPow(1.5, 2, 7)).toThrow(TypeError));
+  test('modPow float exp throws', () =>
+    expect(() => modPow(2, 1.5, 7)).toThrow(TypeError));
+  test('modPow m=0 throws', () =>
+    expect(() => modPow(2, 3, 0)).toThrow(TypeError));
+  test('fibonacci(0) throws', () =>
+    expect(() => fibonacci(0)).toThrow(TypeError));
+  test('fibonacci float throws', () =>
+    expect(() => fibonacci(1.5)).toThrow(TypeError));
+  test('nthFibonacci float throws', () =>
+    expect(() => nthFibonacci(1.5)).toThrow(TypeError));
+  test('nthFibonacci negative throws', () =>
+    expect(() => nthFibonacci(-1)).toThrow(TypeError));
+  test('gcdMany empty throws', () =>
+    expect(() => gcdMany([])).toThrow(RangeError));
+  test('lcmMany empty throws', () =>
+    expect(() => lcmMany([])).toThrow(RangeError));
+  test('gcd float throws', () =>
+    expect(() => gcd(1.5, 2)).toThrow(TypeError));
+  // isPrime large composite triggers full Miller-Rabin path
+  test('isPrime large composite returns false', () =>
+    expect(isPrime(3 * 999983)).toBe(false));
+  // digitalRoot divisible by 9
+  test('digitalRoot(9) returns 9 (9%9===0 branch)', () =>
+    expect(digitalRoot(9)).toBe(9));
+  test('digitalRoot(18) returns 9', () =>
+    expect(digitalRoot(18)).toBe(9));
+});
