@@ -146,4 +146,10 @@ describe('number-theory › coverage completions', () => {
     expect(isPrime(35)).toBe(false);
     expect(isPrime(49)).toBe(false);
   });
+    test('nextPrime odd n triggers even candidate branch (line 101)', () => {
+    // nextPrime(3): candidate=4 (even > 2), candidate++ -> 5; returns 5
+    expect(nextPrime(3)).toBe(5);
+    // nextPrime(7): candidate=8 (even > 2), candidate++ -> 9; but 9 composite, +2 -> 11
+    expect(nextPrime(7)).toBe(11);
+  });
 });
