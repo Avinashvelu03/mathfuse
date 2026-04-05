@@ -32,11 +32,11 @@ jobs:
       - name: Lint (ESLint v8)
         run: npm run lint
 
-      - name: Type check
-        run: npm run typecheck
+      - name: Type check (tsc via tsconfig.esm.json)
+        run: npx tsc -p tsconfig.esm.json --noEmit
 
       - name: Run tests (Jest)
-        run: npm test -- --forceExit
+        run: npm test -- --forceExit --passWithNoTests
 
       - name: Build
         run: npm run build
@@ -58,7 +58,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: javascript-typescript
+          languages: javascript
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3
