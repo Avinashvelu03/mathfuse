@@ -256,3 +256,22 @@ describe('numerical › error branches', () => {
     expect(Math.abs(g[1] - 8)).toBeLessThan(1e-4);
   });
 });
+
+// ─── Missing coverage tests ────────────────────────────────────────────────
+describe('algebra › coverage completions', () => {
+  test('mdet 1x1 matrix', () => expect(mdet([[7]])).toBe(7));
+  test('mdet singular 3x3 returns 0', () => {
+    expect(mdet([[1,2,3],[2,4,6],[1,2,3]])).toBe(0);
+  });
+  test('mmul with zero entry skips', () => {
+    const A = [[1,0],[0,2]];
+    const B = [[3,4],[5,6]];
+    expect(mmul(A,B)).toEqual([[3,4],[10,12]]);
+  });
+});
+
+describe('numerical › brent error branch', () => {
+  test('brent wrong bracket throws', () => {
+    expect(() => brent(x => x**2 - 2, 2, 3)).toThrow(RangeError);
+  });
+});
