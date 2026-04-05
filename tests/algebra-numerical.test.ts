@@ -177,3 +177,81 @@ describe('numerical › utilities', () => {
     close(kahanSum(data), 10, 1e-10);
   });
 });
+
+// ─── Algebra error branches ───────────────────────────────────────────────────
+describe('algebra › error branches', () => {
+  test('vadd length mismatch throws', () =>
+    expect(() => vadd([1,2], [1,2,3])).toThrow(RangeError));
+  test('vsub length mismatch throws', () =>
+    expect(() => vsub([1,2], [1,2,3])).toThrow(RangeError));
+  test('vdot length mismatch throws', () =>
+    expect(() => vdot([1,2], [1,2,3])).toThrow(RangeError));
+  test('vnorm p<=0 throws', () =>
+    expect(() => vnorm([1,2], 0)).toThrow(RangeError));
+  test('vnormalize zero vector throws', () =>
+    expect(() => vnormalize([0,0,0])).toThrow(RangeError));
+  test('vdistance length mismatch throws', () =>
+    expect(() => vdistance([1,2], [1,2,3])).toThrow(RangeError));
+  test('cosineSimilarity zero vector throws', () =>
+    expect(() => cosineSimilarity([0,0], [1,2])).toThrow(RangeError));
+  test('cross3d non-3D throws', () =>
+    expect(() => cross3d([1,2], [3,4])).toThrow(RangeError));
+  test('vhadamard length mismatch throws', () =>
+    expect(() => vhadamard([1,2], [1,2,3])).toThrow(RangeError));
+  test('mtranspose empty throws', () =>
+    expect(() => mtranspose([])).toThrow(RangeError));
+  test('mtranspose jagged rows throws', () =>
+    expect(() => mtranspose([[1,2],[3]] as any)).toThrow(RangeError));
+  test('mdet non-square throws', () =>
+    expect(() => mdet([[1,2,3],[4,5,6]])).toThrow(RangeError));
+  test('madd dimension mismatch throws', () =>
+    expect(() => madd([[1,2]], [[1],[2]])).toThrow(RangeError));
+  test('mmul dimension mismatch throws', () =>
+    expect(() => mmul([[1,2,3]], [[1,2],[3,4]])).toThrow(RangeError));
+  test('mvmul dimension mismatch throws', () =>
+    expect(() => mvmul([[1,2],[3,4]], [1,2,3])).toThrow(RangeError));
+  test('msolve rows/b length mismatch throws', () =>
+    expect(() => msolve([[1,2],[3,4]], [1,2,3])).toThrow(RangeError));
+  test('msolve singular throws', () =>
+    expect(() => msolve([[1,2],[2,4]], [1,2])).toThrow(RangeError));
+});
+
+// ─── Numerical error branches ─────────────────────────────────────────────────
+describe('numerical › error branches', () => {
+  test('bisection non-converge (maxIter=1)', () => {
+    const r = bisection(x => x**2 - 2, 1, 2, 1e-15, 1);
+    expect(r.converged).toBe(false);
+  });
+  test('newtonRaphson zero-derivative throws', () =>
+    expect(() => newtonRaphson(() => 1, 0, () => 0)).toThrow(RangeError));
+  test('newtonRaphson non-converge (maxIter=1)', () => {
+    const r = newtonRaphson(x => x**2 - 2, 1.5, x => 2*x, 1e-15, 1);
+    expect(r.converged).toBe(false);
+  });
+  test('brent non-converge (maxIter=1)', () => {
+    const r = brent(x => x**2 - 2, 1, 2, 1e-15, 1);
+    expect(r.converged).toBe(false);
+  });
+  test('brent inverse-quadratic branch', () => {
+    const r = brent(x => x**3 - x - 2, 1, 2);
+    expect(r.converged).toBe(true);
+  });
+  test('inverseLerp a===b throws', () =>
+    expect(() => inverseLerp(5, 5, 3)).toThrow(RangeError));
+  test('tableInterpolate too short throws', () =>
+    expect(() => tableInterpolate([1], [1], 1)).toThrow(RangeError));
+  test('tableInterpolate x below range clamps', () =>
+    expect(tableInterpolate([1,2,3],[10,20,30], 0)).toBe(10));
+  test('tableInterpolate x above range clamps', () =>
+    expect(tableInterpolate([1,2,3],[10,20,30], 5)).toBe(30));
+  test('lagrange duplicate xs throws', () =>
+    expect(() => lagrange([1,1,2],[0,1,4], 1.5)).toThrow(RangeError));
+  test('lagrange xs/ys length mismatch throws', () =>
+    expect(() => lagrange([1,2],[0,1,4], 1.5)).toThrow(RangeError));
+  test('gradient multivariate', () => {
+    const f = (x: number[]) => x[0]**2 + x[1]**2;
+    const g = gradient(f, [3, 4]);
+    expect(Math.abs(g[0] - 6)).toBeLessThan(1e-4);
+    expect(Math.abs(g[1] - 8)).toBeLessThan(1e-4);
+  });
+});
