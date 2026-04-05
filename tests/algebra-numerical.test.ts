@@ -10,6 +10,7 @@ import {
   integrate, gaussLegendre,
   lerp, inverseLerp, tableInterpolate, lagrange,
   clamp, roundTo, approxEqual, remap, kahanSum,
+  gradient,
 } from '../src/numerical';
 
 const close = (a: number, b: number, tol = 1e-7) =>
