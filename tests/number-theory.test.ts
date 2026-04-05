@@ -136,3 +136,14 @@ describe('number-theory › error branches', () => {
   test('digitalRoot(18) returns 9', () =>
     expect(digitalRoot(18)).toBe(9));
 });
+
+// ─── Number-theory coverage completions ────────────────────────────────────────
+describe('number-theory › coverage completions', () => {
+  test('isPrime composite through Miller-Rabin returns false', () => {
+    // 25, 35, 49 are composites not divisible by 2 or 3
+    // They go through the full Miller-Rabin loop hitting return false (line 69)
+    expect(isPrime(25)).toBe(false);
+    expect(isPrime(35)).toBe(false);
+    expect(isPrime(49)).toBe(false);
+  });
+});
